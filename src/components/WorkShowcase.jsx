@@ -52,14 +52,14 @@ const PROJECTS = [
   },
   {
     id: 5,
-    title: 'DAVINCI RESOLVE COLOR GRADE',
-    client: 'COMMERCIAL POST',
+    title: '3D MOTION COMPOSITING & VFX',
+    client: 'COMMERCIAL 3D VFX',
     year: '2025',
-    category: 'commercial',
-    format: 'ProRes 4444',
-    video: 'videos/0717.mov',
-    desc: 'Node-based color grading, LUT creation & film grain.',
-    tags: ['DaVinci Resolve', 'Node Color Pass', 'Film Grain']
+    category: 'vfx',
+    format: '4K RAW',
+    video: 'videos/Comp 1.mp4',
+    desc: '3D camera motion tracking, particle compositing & title design.',
+    tags: ['After Effects', '3D Compositing', 'Kinetic Titles']
   },
   {
     id: 6,

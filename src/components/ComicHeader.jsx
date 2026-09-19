@@ -18,10 +18,10 @@ export default function ComicHeader({
 
   const chapters = [
     { id: 'ch1', num: '01', title: 'GAMING' },
-    { id: 'ch2', num: '02', title: 'VFX' },
-    { id: 'ch3', num: '03', title: 'REELS' },
-    { id: 'ch4', num: '04', title: 'COLOR' },
-    { id: 'ch5', num: '05', title: 'COMMERCIAL' },
+    { id: 'ch2', num: '02', title: 'BEGGIN' },
+    { id: 'ch3', num: '03', title: '3D VFX' },
+    { id: 'ch4', num: '04', title: 'REELS' },
+    { id: 'ch5', num: '05', title: '3D' },
     { id: 'ch6', num: '06', title: 'NARRATIVE' },
   ];
 
