@@ -138,7 +138,7 @@ export default function HeroComicCover({ onOpenShowreel, cmykOffset }) {
       <div className="max-w-[1380px] mx-auto w-full text-center relative z-10 my-auto flex flex-col items-center">
         
         {/* Top Banner */}
-        <div className="inline-block bg-[#FFDD00] text-black border-4 border-black px-6 py-2 rotate-[-1deg] shadow-[6px_6px_0_#000] mb-4">
+        <div className="inline-block bg-[#FFDD00] text-black border-4 border-black px-6 py-2 shadow-[6px_6px_0_#000] mb-4">
           <span className="font-bangers text-xl md:text-3xl tracking-widest uppercase">
             ⚡ VIDEO EDITOR ⚡
           </span>
@@ -161,7 +161,6 @@ export default function HeroComicCover({ onOpenShowreel, cmykOffset }) {
           <div className="lg:col-span-5 flex flex-col items-center relative">
             <div 
               ref={photoCardRef}
-              style={{ transformStyle: 'preserve-3d', perspective: 1000 }}
               className="relative cursor-pointer group max-w-full"
               onClick={(e) => triggerBurst(e, 'KABOOM')}
             >
@@ -169,11 +168,11 @@ export default function HeroComicCover({ onOpenShowreel, cmykOffset }) {
               <div className="absolute inset-0 bg-[#FFDD00] rounded-full blur-3xl opacity-30 animate-pulse pointer-events-none" />
 
               {/* Floating Starburst Badges */}
-              <div className="absolute -top-6 -left-3 sm:-top-8 sm:-left-6 z-30 font-bangers text-lg sm:text-2xl md:text-4xl bg-[#FFDD00] text-black px-3.5 sm:px-5 py-1.5 sm:py-3 border-3 sm:border-4 border-black shadow-[4px_4px_0_#000] sm:shadow-[6px_6px_0_#000] rotate-[-12deg] group-hover:scale-125 transition-transform">
+              <div className="absolute -top-6 -left-3 sm:-top-8 sm:-left-6 z-30 font-bangers text-lg sm:text-2xl md:text-3xl bg-[#FFDD00] text-black px-3.5 sm:px-5 py-1.5 sm:py-2.5 border-3 sm:border-4 border-black shadow-[4px_4px_0_#000] sm:shadow-[6px_6px_0_#000] group-hover:scale-110 transition-transform">
                 💥 EDITOR!
               </div>
 
-              <div className="absolute -bottom-5 -right-2 sm:-bottom-6 sm:-right-4 z-30 font-bangers text-base sm:text-xl md:text-2xl bg-[#00FFFF] text-black px-3 sm:px-4 py-1 sm:py-2 border-2 sm:border-3 border-black shadow-[4px_4px_0_#000] sm:shadow-[5px_5px_0_#000] rotate-[8deg]">
+              <div className="absolute -bottom-5 -right-2 sm:-bottom-6 sm:-right-4 z-30 font-bangers text-base sm:text-xl md:text-2xl bg-[#00FFFF] text-black px-3 sm:px-4 py-1 sm:py-2 border-2 sm:border-3 border-black shadow-[4px_4px_0_#000] sm:shadow-[5px_5px_0_#000]">
                 ⚡ Motion Graphics
               </div>
 
@@ -191,34 +190,33 @@ export default function HeroComicCover({ onOpenShowreel, cmykOffset }) {
           <div className="lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left">
             
             {/* Tagline Speech Box */}
-            <div className="relative bg-white text-black border-4 border-black p-6 md:p-8 rotate-[1deg] shadow-[10px_10px_0_#000] mb-6 speech-bubble-bottom w-full">
-              <p className="font-comic font-bold text-xl md:text-3xl leading-snug">
+            <div className="relative bg-white text-black border-4 border-black p-5 sm:p-7 shadow-[8px_8px_0_#000] mb-6 speech-bubble-bottom w-full">
+              <p className="font-comic font-bold text-lg sm:text-2xl md:text-3xl leading-snug">
                 "COMMERCIALS, GAMING MONTAGES, REELS & VFX CRAFTED WITH RHYTHMIC PACING AND HIGH-VOLTAGE WAX CRAYON ENERGY!"
               </p>
             </div>
 
             {/* Software Mastery Badges */}
-            <div className="flex flex-wrap justify-center lg:justify-start gap-2.5 mb-6 w-full">
+            <div className="flex flex-wrap justify-center lg:justify-start gap-2 sm:gap-2.5 mb-6 w-full">
               {softwareBadges.map((badge, idx) => (
                 <div
                   key={idx}
-                  className={`font-bangers text-base md:text-lg px-3.5 py-1.5 border-3 border-black shadow-[4px_4px_0_#000] flex items-center gap-2 ${badge.bg}`}
+                  className={`font-bangers text-sm sm:text-base md:text-lg px-3 sm:px-3.5 py-1 sm:py-1.5 border-3 border-black shadow-[3px_3px_0_#000] sm:shadow-[4px_4px_0_#000] flex items-center gap-2 ${badge.bg}`}
                 >
-                  <span className="font-extrabold text-xl">{badge.label}</span>
-                  <span className="font-comic text-xs font-bold tracking-wider">{badge.name}</span>
+                  <span className="font-extrabold text-lg sm:text-xl">{badge.label}</span>
+                  <span className="font-comic text-[0.65rem] sm:text-xs font-bold tracking-wider">{badge.name}</span>
                 </div>
               ))}
             </div>
 
-            {/* 3D Mossy Retro TV Stage embedded inside Comic Issue Panel */}
+            {/* Retro TV Stage embedded inside Comic Issue Panel */}
             <div ref={tvRef} className="w-full relative">
               <div 
-                style={{ transform: `translate(${tilt.x}px, ${tilt.y}px)` }}
                 onClick={(e) => {
                   triggerBurst(e, 'KABOOM');
                   onOpenShowreel();
                 }}
-                className="comic-box p-3 bg-[#121212] cursor-pointer group hover:scale-[1.02] transition-transform duration-300"
+                className="comic-box p-3 bg-[#121212] cursor-pointer group hover:-translate-y-1.5 transition-transform duration-300 border-4 border-black shadow-[8px_8px_0_#000]"
               >
                 <div className="relative aspect-video rounded-lg overflow-hidden border-4 border-black bg-black">
                   <img 
@@ -235,14 +233,14 @@ export default function HeroComicCover({ onOpenShowreel, cmykOffset }) {
 
                   {/* Center Play Button Overlay */}
                   <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                    <div className="w-18 h-18 bg-[#FFDD00] text-black border-4 border-black rounded-full flex items-center justify-center shadow-[6px_6px_0_#000] group-hover:scale-110 transition-transform">
-                      <Play size={32} className="ml-1 fill-black" />
+                    <div className="w-16 sm:w-18 h-16 sm:h-18 bg-[#FFDD00] text-black border-4 border-black rounded-full flex items-center justify-center shadow-[6px_6px_0_#000] group-hover:scale-110 transition-transform">
+                      <Play size={30} className="ml-1 fill-black" />
                     </div>
                   </div>
                 </div>
 
-                <div className="flex justify-between items-center px-2 pt-2.5">
-                  <span className="font-bangers text-yellow-400 text-base md:text-lg">
+                <div className="flex flex-wrap justify-between items-center px-2 pt-2.5 gap-2">
+                  <span className="font-bangers text-yellow-400 text-sm sm:text-lg">
                     🎬 WATCH SHOWREEL (BEGGIN CUT)
                   </span>
                   <span className="font-marker text-[0.65rem] text-white bg-red-600 px-2.5 py-1 border border-white">
@@ -257,19 +255,18 @@ export default function HeroComicCover({ onOpenShowreel, cmykOffset }) {
         </div>
 
         {/* Interactive SFX Explosive Sound Bursts Bar */}
-        <div className="flex flex-wrap justify-center items-center gap-3 md:gap-4 my-4">
+        <div className="flex flex-wrap justify-center items-center gap-2.5 sm:gap-4 my-4">
           {[
-            { text: 'POW!', color: 'bg-[#FFDD00] text-black', sfx: 'POW', rot: '-5deg' },
-            { text: 'BOOM!', color: 'bg-[#E52535] text-white', sfx: 'BOOM', rot: '4deg' },
-            { text: 'ZAP!', color: 'bg-[#00FFFF] text-black', sfx: 'ZAP', rot: '-3deg' },
-            { text: 'KABOOM!', color: 'bg-[#FF00FF] text-white', sfx: 'KABOOM', rot: '5deg' },
-            { text: 'WHOOSH!', color: 'bg-white text-black', sfx: 'WHOOSH', rot: '-4deg' },
+            { text: 'POW!', color: 'bg-[#FFDD00] text-black', sfx: 'POW' },
+            { text: 'BOOM!', color: 'bg-[#E52535] text-white', sfx: 'BOOM' },
+            { text: 'ZAP!', color: 'bg-[#00FFFF] text-black', sfx: 'ZAP' },
+            { text: 'KABOOM!', color: 'bg-[#FF00FF] text-white', sfx: 'KABOOM' },
+            { text: 'WHOOSH!', color: 'bg-white text-black', sfx: 'WHOOSH' },
           ].map((burst, idx) => (
             <button
               key={idx}
               onClick={(e) => triggerBurst(e, burst.sfx)}
-              style={{ transform: `rotate(${burst.rot})` }}
-              className={`font-bangers text-xl md:text-3xl px-5 py-2 border-4 border-black shadow-[5px_5px_0_#000] hover:scale-110 active:scale-95 transition-all ${burst.color}`}
+              className={`font-bangers text-lg sm:text-2xl md:text-3xl px-4 sm:px-5 py-1.5 sm:py-2 border-3 sm:border-4 border-black shadow-[4px_4px_0_#000] sm:shadow-[5px_5px_0_#000] hover:scale-105 active:scale-95 transition-all ${burst.color}`}
             >
               💥 {burst.text}
             </button>

@@ -42,32 +42,36 @@ export default function ChapterSection({ chapter, cmykOffset, onSelectProject })
 
     switch (chapter.flyDirection) {
       case 'top-left':
-        fromState = { x: -800 * mult, y: -450 * mult, rotate: -180, scale: 0.3, opacity: 0, force3D: true };
-        toState.rotate = 360 + (chapter.finalRotation || 0);
+        fromState = { x: -600 * mult, y: -300 * mult, rotate: 0, scale: 0.6, opacity: 0, force3D: true };
+        toState.rotate = 0;
         break;
       case 'right':
-        fromState = { x: 700 * mult, y: 150 * mult, rotate: 45, scale: 0.3, opacity: 0, force3D: true };
-        toState.rotate = chapter.finalRotation || 0;
+        fromState = { x: 500 * mult, y: 0, rotate: 0, scale: 0.6, opacity: 0, force3D: true };
+        toState.rotate = 0;
         break;
       case 'bottom-left':
-        fromState = { x: -700 * mult, y: 450 * mult, rotate: -45, scale: 0.3, opacity: 0, force3D: true };
+        fromState = { x: -500 * mult, y: 300 * mult, rotate: 0, scale: 0.6, opacity: 0, force3D: true };
+        toState.rotate = 0;
         break;
       case 'bottom-right':
-        fromState = { x: 700 * mult, y: 450 * mult, rotate: -45, scale: 0.3, opacity: 0, force3D: true };
+        fromState = { x: 500 * mult, y: 300 * mult, rotate: 0, scale: 0.6, opacity: 0, force3D: true };
+        toState.rotate = 0;
         break;
       case 'top-right':
-        fromState = { x: 700 * mult, y: -450 * mult, rotate: 360, scale: 0.2, opacity: 0, force3D: true };
-        toState.rotate = 360 + (chapter.finalRotation || 0);
+        fromState = { x: 500 * mult, y: -300 * mult, rotate: 0, scale: 0.6, opacity: 0, force3D: true };
+        toState.rotate = 0;
         break;
       case 'top':
-        fromState = { x: 0, y: -650 * mult, rotate: 15, scale: 1.8, opacity: 0, force3D: true };
+        fromState = { x: 0, y: -450 * mult, rotate: 0, scale: 1.2, opacity: 0, force3D: true };
+        toState.rotate = 0;
         break;
       default:
-        fromState = { x: -500 * mult, opacity: 0, force3D: true };
+        fromState = { x: -400 * mult, opacity: 0, force3D: true };
+        toState.rotate = 0;
     }
 
     const ctx = gsap.context(() => {
-      // 1. Smooth Hardware Accelerated Cutout ScrollTrigger Fly-In
+      // 1. Smooth Symmetric Cutout ScrollTrigger Fly-In
       gsap.fromTo(
         el,
         fromState,
@@ -75,41 +79,27 @@ export default function ChapterSection({ chapter, cmykOffset, onSelectProject })
           ...toState,
           scrollTrigger: {
             trigger: sec,
-            start: 'top 92%',
+            start: 'top 90%',
             end: 'center 45%',
-            scrub: isMobile ? 0.6 : (chapter.scrubSpeed || 0.9),
+            scrub: isMobile ? 0.5 : 0.8,
           }
         }
       );
 
-      // Continuous Electric Jitter/Flicker for Electric Bear (Chapter 2)
-      if (chapter.flyDirection === 'right') {
-        gsap.to(el, {
-          x: '+=6',
-          y: '-=6',
-          repeat: -1,
-          yoyo: true,
-          duration: 0.08,
-          ease: 'rough'
-        });
-      }
-
-      // 2. CRAZY Panel Box 3D Pop & Tilt Reveal
+      // 2. Symmetric Clean Vertical Reveal for Panel Box
       if (panel) {
         gsap.fromTo(
           panel,
-          { y: 120, opacity: 0, rotateX: 20, rotateY: -10, scale: 0.85 },
+          { y: 50, opacity: 0, scale: 0.96 },
           {
             y: 0,
             opacity: 1,
-            rotateX: 0,
-            rotateY: 0,
             scale: 1,
-            duration: 1.0,
-            ease: 'back.out(1.7)',
+            duration: 0.8,
+            ease: 'power2.out',
             scrollTrigger: {
               trigger: sec,
-              start: 'top 75%',
+              start: 'top 80%',
             }
           }
         );
@@ -186,10 +176,10 @@ export default function ChapterSection({ chapter, cmykOffset, onSelectProject })
       
       {/* Background Section Title Banner */}
       <div className="max-w-[1300px] w-full mx-auto mb-10 text-center relative z-10">
-        <div className="inline-block bg-black text-[#FFDD00] font-bangers text-xl md:text-3xl px-6 py-2 border-4 border-white rotate-[-1deg] shadow-[6px_6px_0_#000]">
+        <div className="inline-block bg-black text-[#FFDD00] font-bangers text-xl md:text-3xl px-6 py-2 border-4 border-white shadow-[6px_6px_0_#000]">
           CHAPTER {chapter.num}: {chapter.subtitle}
         </div>
-        <h2 className={`font-bangers text-5xl md:text-8xl tracking-wide uppercase mt-4 ${
+        <h2 className={`font-bangers text-4xl sm:text-6xl md:text-8xl tracking-wide uppercase mt-4 ${
           cmykOffset ? 'cmyk-offset-yellow' : 'text-[#FFDD00] drop-shadow-[7px_7px_0_#000]'
         }`}>
           {chapter.title}
@@ -206,7 +196,7 @@ export default function ChapterSection({ chapter, cmykOffset, onSelectProject })
             {/* Action SFX Sound Burst Badge over Animal Cutout */}
             <div 
               ref={burstBadgeRef}
-              className={`absolute -top-10 -left-6 z-30 font-bangers text-3xl md:text-5xl px-6 py-4 border-4 border-black shadow-[6px_6px_0_#000] rotate-[-12deg] group-hover:scale-125 transition-transform ${chapter.burstBg || 'bg-[#FFDD00] text-black'}`}
+              className={`absolute -top-8 -left-4 z-30 font-bangers text-2xl sm:text-3xl md:text-5xl px-4 sm:px-6 py-2 sm:py-3 border-4 border-black shadow-[6px_6px_0_#000] group-hover:scale-110 transition-transform ${chapter.burstBg || 'bg-[#FFDD00] text-black'}`}
             >
               💥 {chapter.sfxWord}!
             </div>
@@ -224,14 +214,14 @@ export default function ChapterSection({ chapter, cmykOffset, onSelectProject })
 
         {/* Comic Story & Video Panel Box */}
         <div className={`lg:col-span-6 ${chapter.reverseLayout ? 'lg:order-1' : 'lg:order-2'}`}>
-          <div ref={panelRef} className="comic-box p-6 md:p-8 relative" style={{ perspective: 1000 }}>
+          <div ref={panelRef} className="comic-box p-6 md:p-8 relative">
             
             {/* Panel Issue Header */}
-            <div className="flex justify-between items-center border-b-4 border-black pb-3 mb-4">
+            <div className="flex flex-wrap justify-between items-center gap-2 border-b-4 border-black pb-3 mb-4">
               <span className="font-bangers text-2xl md:text-3xl text-black">
                 PANEL {chapter.num}.1 — {chapter.projectTitle}
               </span>
-              <span className="font-marker text-xs bg-[#FFDD00] text-black px-3 py-1 border-2 border-black rotate-[2deg]">
+              <span className="font-marker text-xs bg-[#FFDD00] text-black px-3 py-1 border-2 border-black">
                 FLY: {chapter.flyDirection.toUpperCase()}
               </span>
             </div>

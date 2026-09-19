@@ -93,10 +93,8 @@ export default function MotionGraphicsSection({ onSelectProject }) {
 }
 
 function MotionCard({ project, onSelectProject }) {
-  const [tilt, setTilt] = useState({ rotateX: 0, rotateY: 0 });
   const [durationText, setDurationText] = useState('--:--');
   const videoRef = useRef(null);
-  const cardRef = useRef(null);
 
   const handleLoadedMetadata = (e) => {
     const dur = e.target.duration;
@@ -107,19 +105,6 @@ function MotionCard({ project, onSelectProject }) {
     }
   };
 
-  const handleMouseMove = (e) => {
-    if (typeof window !== 'undefined' && ('ontouchstart' in window || window.innerWidth < 768)) return;
-    if (!cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-    const rotateX = ((y - centerY) / centerY) * -8;
-    const rotateY = ((x - centerX) / centerX) * 8;
-    setTilt({ rotateX, rotateY });
-  };
-
   const handleMouseEnter = () => {
     playTapeClick();
     if (videoRef.current) {
@@ -128,7 +113,6 @@ function MotionCard({ project, onSelectProject }) {
   };
 
   const handleMouseLeave = () => {
-    setTilt({ rotateX: 0, rotateY: 0 });
     if (videoRef.current) {
       videoRef.current.pause();
       try {
@@ -139,18 +123,14 @@ function MotionCard({ project, onSelectProject }) {
 
   return (
     <motion.article
-      ref={cardRef}
-      animate={{ 
-        rotateX: tilt.rotateX,
-        rotateY: tilt.rotateY,
-      }}
-      transition={{ type: 'spring', damping: 25, stiffness: 250 }}
-      style={{ transformStyle: 'preserve-3d', perspective: 1000 }}
-      onMouseMove={handleMouseMove}
+      initial={{ opacity: 0, y: 15 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.3 }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onClick={() => onSelectProject({ ...project, durationText })}
-      className="bg-white text-black border-4 border-black shadow-[8px_8px_0_#000] overflow-hidden group cursor-pointer flex flex-col"
+      className="bg-white text-black border-4 border-black shadow-[6px_6px_0_#000] overflow-hidden group cursor-pointer flex flex-col hover:-translate-y-2 transition-transform duration-300"
     >
       {/* Video Container */}
       <div className="relative aspect-video bg-black border-b-4 border-black overflow-hidden">
@@ -197,7 +177,7 @@ function MotionCard({ project, onSelectProject }) {
 
         <div className="flex flex-wrap gap-2 mt-auto pt-3 border-t-2 border-black/10">
           {project.tags.map((tag, i) => (
-            <span key={i} className="font-marker text-xs px-2.5 py-0.5 border border-black bg-[#FFDD00] text-black rotate-[-1deg]">
+            <span key={i} className="font-marker text-xs px-2.5 py-0.5 border border-black bg-[#FFDD00] text-black">
               {tag}
             </span>
           ))}

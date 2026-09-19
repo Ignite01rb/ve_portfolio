@@ -16,32 +16,28 @@ export default function ContactForm({ isRetroMode }) {
   };
 
   return (
-    <section className={`w-full py-20 transition-colors duration-700 ${
-      isRetroMode ? 'bg-[#F8F7FF]' : 'bg-cinematic-bg'
-    }`} id="contact">
-      <div className="max-w-[1000px] mx-auto px-6">
+    <section className="w-full py-20 bg-[#B81424] bg-halftone-pattern border-t-8 border-black text-black" id="contact">
+      <div className="max-w-[1000px] mx-auto px-4 sm:px-6">
         <ScrollReveal>
-          <div className={`border rounded-2xl p-8 lg:p-12 shadow-xl grid grid-cols-1 lg:grid-cols-12 gap-10 items-center transition-colors duration-700 ${
-            isRetroMode ? 'bg-white border-[#D5D0F6]' : 'bg-cinematic-card border-cinematic-border'
-          }`}>
+          <div className="bg-white border-4 border-black p-6 sm:p-8 lg:p-12 shadow-[10px_10px_0_#000] grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             
             {/* Info Column */}
-            <div className="lg:col-span-5 flex flex-col gap-5">
-              <span className={`font-accent text-xs font-bold tracking-widest block ${
-                isRetroMode ? 'text-[#6C5CE7]' : 'text-gold-accent'
-              }`}>// STUDIO CONNECT</span>
+            <div className="lg:col-span-5 flex flex-col gap-4">
+              <span className="font-marker text-xs text-[#E52535] font-bold tracking-widest block uppercase">
+                // STUDIO CONNECT
+              </span>
               
-              <h2 className={`font-heading font-extrabold text-3xl md:text-4xl tracking-tight uppercase ${
-                isRetroMode ? 'text-[#1E2749]' : 'text-white'
-              }`}>
+              <h2 className="font-bangers text-4xl sm:text-5xl text-black tracking-wide uppercase leading-tight">
                 START A PROJECT
               </h2>
 
-              <div className="flex items-center gap-3 mt-2">
-                <Mail size={16} className={isRetroMode ? 'text-[#6C5CE7]' : 'text-gold-accent'} />
-                <a href="mailto:raaghavbisht@gmail.com" className={`font-bold text-sm transition-colors ${
-                  isRetroMode ? 'text-[#1E2749] hover:text-[#6C5CE7]' : 'text-white hover:text-gold-accent'
-                }`}>
+              <p className="font-comic text-xs sm:text-sm font-bold text-black/80 leading-relaxed">
+                Ready to level up your video edit with high-voltage beat sync & VFX? Send your project briefing below!
+              </p>
+
+              <div className="flex items-center gap-3 mt-1 bg-[#FFDD00] text-black font-bangers text-sm sm:text-base px-4 py-2 border-2 border-black w-fit shadow-[3px_3px_0_#000]">
+                <Mail size={16} />
+                <a href="mailto:raaghavbisht@gmail.com" className="hover:underline">
                   raaghavbisht@gmail.com
                 </a>
               </div>
@@ -57,11 +53,7 @@ export default function ContactForm({ isRetroMode }) {
                   placeholder="Your Name / Agency"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className={`w-full border rounded-xl p-3.5 text-sm outline-none transition-colors ${
-                    isRetroMode 
-                      ? 'bg-[#F8F7FF] border-[#D5D0F6] text-[#1E2749] placeholder-[#94A3B8] focus:border-[#6C5CE7]' 
-                      : 'bg-cinematic-bg border-cinematic-border text-white placeholder-white/30 focus:border-gold-accent'
-                  }`}
+                  className="w-full bg-[#FFF8E7] border-3 border-black p-3.5 text-sm font-comic font-bold text-black placeholder-black/50 outline-none focus:bg-white shadow-[3px_3px_0_#000]"
                 />
 
                 <input 
@@ -70,11 +62,7 @@ export default function ContactForm({ isRetroMode }) {
                   placeholder="Email Address"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className={`w-full border rounded-xl p-3.5 text-sm outline-none transition-colors ${
-                    isRetroMode 
-                      ? 'bg-[#F8F7FF] border-[#D5D0F6] text-[#1E2749] placeholder-[#94A3B8] focus:border-[#6C5CE7]' 
-                      : 'bg-cinematic-bg border-cinematic-border text-white placeholder-white/30 focus:border-gold-accent'
-                  }`}
+                  className="w-full bg-[#FFF8E7] border-3 border-black p-3.5 text-sm font-comic font-bold text-black placeholder-black/50 outline-none focus:bg-white shadow-[3px_3px_0_#000]"
                 />
               </div>
 
@@ -84,27 +72,19 @@ export default function ContactForm({ isRetroMode }) {
                 placeholder="Tell me about your project..."
                 value={formData.message}
                 onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                className={`w-full border rounded-xl p-3.5 text-sm outline-none transition-colors ${
-                  isRetroMode 
-                    ? 'bg-[#F8F7FF] border-[#D5D0F6] text-[#1E2749] placeholder-[#94A3B8] focus:border-[#6C5CE7]' 
-                    : 'bg-cinematic-bg border-cinematic-border text-white placeholder-white/30 focus:border-gold-accent'
-                }`}
+                className="w-full bg-[#FFF8E7] border-3 border-black p-3.5 text-sm font-comic font-bold text-black placeholder-black/50 outline-none focus:bg-white shadow-[3px_3px_0_#000]"
               />
 
               <button 
                 type="submit" 
-                className={`w-full py-3.5 rounded-full font-accent text-sm font-bold tracking-wider flex items-center justify-center gap-2 shadow-md transition-all ${
-                  isRetroMode 
-                    ? 'bg-[#6C5CE7] text-white hover:bg-[#5B4BC4]' 
-                    : 'bg-gold-accent text-cinematic-bg hover:bg-white'
-                }`}
+                className="w-full py-4 bg-[#FFDD00] text-black font-bangers text-xl tracking-wider border-3 border-black flex items-center justify-center gap-2 shadow-[4px_4px_0_#000] hover:bg-black hover:text-white transition-all cursor-pointer"
               >
-                Send Inquiry <Send size={15} />
+                SEND INQUIRY ⚡ <Send size={18} />
               </button>
 
               {submitted && (
-                <p className="text-center font-accent text-xs font-bold text-emerald-500 mt-1">
-                  Inquiry sent! Raaghav will reach out shortly.
+                <p className="text-center font-bangers text-sm text-emerald-600 mt-1">
+                  💥 INQUIRY SENT! RAAGHAV WILL REACH OUT SHORTLY.
                 </p>
               )}
 

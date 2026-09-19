@@ -172,10 +172,8 @@ export default function WorkShowcase({ onSelectProject, isRetroMode }) {
 // 3D Perspective Comic Card Component with Dynamic Video Timing Detection
 function ProjectCard3D({ project, onSelectProject, isRetroMode }) {
   const [isHovered, setIsHovered] = useState(false);
-  const [tilt, setTilt] = useState({ rotateX: 0, rotateY: 0 });
   const [durationText, setDurationText] = useState('--:--');
   const videoRef = useRef(null);
-  const cardRef = useRef(null);
 
   const handleLoadedMetadata = (e) => {
     const dur = e.target.duration;
@@ -184,19 +182,6 @@ function ProjectCard3D({ project, onSelectProject, isRetroMode }) {
       const secs = Math.floor(dur % 60);
       setDurationText(`${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`);
     }
-  };
-
-  const handleMouseMove = (e) => {
-    if (typeof window !== 'undefined' && ('ontouchstart' in window || window.innerWidth < 768)) return;
-    if (!cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-    const rotateX = ((y - centerY) / centerY) * -8;
-    const rotateY = ((x - centerX) / centerX) * 8;
-    setTilt({ rotateX, rotateY });
   };
 
   const handleMouseEnter = () => {
@@ -209,7 +194,6 @@ function ProjectCard3D({ project, onSelectProject, isRetroMode }) {
 
   const handleMouseLeave = () => {
     setIsHovered(false);
-    setTilt({ rotateX: 0, rotateY: 0 });
     if (videoRef.current) {
       videoRef.current.pause();
       try {
@@ -220,25 +204,16 @@ function ProjectCard3D({ project, onSelectProject, isRetroMode }) {
 
   return (
     <motion.article 
-      ref={cardRef}
       layout
-      initial={{ opacity: 0, scale: 0.85, y: 20 }}
-      animate={{ 
-        opacity: 1, 
-        scale: 1,
-        y: 0,
-        rotateX: tilt.rotateX,
-        rotateY: tilt.rotateY,
-      }}
-      exit={{ opacity: 0, scale: 0.85, y: 20 }}
-      transition={{ type: 'spring', damping: 25, stiffness: 250 }}
-      style={{ transformStyle: 'preserve-3d', perspective: 1000 }}
-      onMouseMove={handleMouseMove}
+      initial={{ opacity: 0, scale: 0.95, y: 15 }}
+      animate={{ opacity: 1, scale: 1, y: 0 }}
+      exit={{ opacity: 0, scale: 0.95, y: 15 }}
+      transition={{ duration: 0.3 }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onClick={() => onSelectProject({ ...project, durationText })}
       data-cursor="PLAY"
-      className="comic-box group cursor-pointer flex flex-col h-full relative"
+      className="comic-box group cursor-pointer flex flex-col h-full relative hover:-translate-y-2 transition-transform duration-300 border-4 border-black bg-white shadow-[6px_6px_0_#000]"
     >
       {/* Media Box - Direct Video Frame Thumbnail */}
       <div className="relative aspect-video overflow-hidden bg-black border-b-4 border-black">
@@ -258,12 +233,9 @@ function ProjectCard3D({ project, onSelectProject, isRetroMode }) {
 
         {/* Hover Overlay with Play Icon */}
         <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-          <motion.div 
-            whileHover={{ scale: 1.15 }}
-            className="w-14 h-14 bg-[#FFDD00] text-black border-3 border-black rounded-full flex items-center justify-center shadow-[4px_4px_0_#000]"
-          >
+          <div className="w-14 h-14 bg-[#FFDD00] text-black border-3 border-black rounded-full flex items-center justify-center shadow-[4px_4px_0_#000] group-hover:scale-110 transition-transform">
             <Play size={24} className="ml-1 fill-black" />
-          </motion.div>
+          </div>
         </div>
 
         {/* Exact Video Duration Badge */}
@@ -287,7 +259,7 @@ function ProjectCard3D({ project, onSelectProject, isRetroMode }) {
         </p>
         <div className="flex flex-wrap gap-1.5 mt-auto pt-3 border-t-2 border-black/10">
           {project.tags.map((tag, tIdx) => (
-            <span key={tIdx} className="font-marker text-[0.65rem] px-2 py-0.5 border border-black bg-[#FFDD00] text-black rotate-[-1deg]">
+            <span key={tIdx} className="font-marker text-[0.65rem] px-2 py-0.5 border border-black bg-[#FFDD00] text-black">
               {tag}
             </span>
           ))}
