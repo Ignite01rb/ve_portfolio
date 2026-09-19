@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import confetti from 'canvas-confetti';
-import { Play, Sparkles } from 'lucide-react';
+import { Play, Sparkles, Flame } from 'lucide-react';
 import { playComicSFX } from '../utils/audioSFX';
 import { getVideoUrl } from '../utils/videoUtils';
 
@@ -10,7 +10,9 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function ChapterSection({ chapter, cmykOffset, onSelectProject }) {
   const sectionRef = useRef(null);
+  const headerRef = useRef(null);
   const panelRef = useRef(null);
+  const videoBoxRef = useRef(null);
   const videoRef = useRef(null);
   const burstBadgeRef = useRef(null);
   const [durationText, setDurationText] = useState('--:--');
@@ -18,45 +20,105 @@ export default function ChapterSection({ chapter, cmykOffset, onSelectProject })
 
   useEffect(() => {
     const sec = sectionRef.current;
+    const header = headerRef.current;
     const panel = panelRef.current;
+    const videoBox = videoBoxRef.current;
     const badge = burstBadgeRef.current;
 
     if (!sec) return;
 
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+
     const ctx = gsap.context(() => {
-      // 1. Symmetric Clean Vertical Reveal for Main Panel Box
+      // 1. Premium SaaS 3D Perspective Card Unfold Scroll Scrub
       if (panel) {
+        gsap.set(panel, { 
+          transformPerspective: 1200, 
+          transformStyle: "preserve-3d",
+          force3D: true
+        });
+
         gsap.fromTo(
           panel,
-          { y: 60, opacity: 0, scale: 0.96 },
           {
+            rotateX: isMobile ? 8 : 16,
+            scale: isMobile ? 0.94 : 0.88,
+            y: isMobile ? 60 : 120,
+            opacity: 0,
+            filter: 'brightness(0.7)'
+          },
+          {
+            rotateX: 0,
+            scale: 1,
             y: 0,
             opacity: 1,
-            scale: 1,
-            duration: 0.8,
+            filter: 'brightness(1)',
             ease: 'power2.out',
             scrollTrigger: {
               trigger: sec,
-              start: 'top 80%',
+              start: 'top 90%',
+              end: 'center 50%',
+              scrub: isMobile ? 0.6 : 1.1,
             }
           }
         );
       }
 
-      // 2. Floating Sound Burst Badge Pulsing Motion
+      // 2. SaaS Header Title Smooth Entrance
+      if (header) {
+        gsap.fromTo(
+          header,
+          { y: -45, opacity: 0, scale: 0.92 },
+          {
+            y: 0,
+            opacity: 1,
+            scale: 1,
+            duration: 0.8,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: sec,
+              start: 'top 88%',
+              end: 'top 55%',
+              scrub: 0.8,
+            }
+          }
+        );
+      }
+
+      // 3. Inner Video Player Spring Scale-Up
+      if (videoBox) {
+        gsap.fromTo(
+          videoBox,
+          { scale: 0.94, opacity: 0.6 },
+          {
+            scale: 1,
+            opacity: 1,
+            duration: 0.9,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: sec,
+              start: 'top 70%',
+              end: 'center 55%',
+              scrub: 0.7,
+            }
+          }
+        );
+      }
+
+      // 4. Elastic Sound Burst Badge Snap
       if (badge) {
         gsap.fromTo(
           badge,
-          { scale: 0.5, rotate: -15, opacity: 0 },
+          { scale: 0.3, rotate: -25, opacity: 0 },
           {
             scale: 1.05,
             rotate: -6,
             opacity: 1,
-            duration: 0.6,
+            duration: 0.7,
             ease: 'elastic.out(1, 0.4)',
             scrollTrigger: {
               trigger: sec,
-              start: 'top 75%',
+              start: 'top 65%',
             }
           }
         );
@@ -109,11 +171,11 @@ export default function ChapterSection({ chapter, cmykOffset, onSelectProject })
     <section 
       ref={sectionRef} 
       id={chapter.id}
-      className={`relative w-full min-h-screen py-20 px-4 flex flex-col justify-center items-center overflow-hidden border-b-8 border-black ${chapter.bgClass || 'bg-halftone-pattern'}`}
+      className={`relative w-full min-h-screen py-24 px-4 flex flex-col justify-center items-center overflow-hidden border-b-8 border-black ${chapter.bgClass || 'bg-halftone-pattern'}`}
     >
       
       {/* Background Section Title Banner */}
-      <div className="max-w-[1000px] w-full mx-auto mb-8 text-center relative z-10">
+      <div ref={headerRef} className="max-w-[1000px] w-full mx-auto mb-8 text-center relative z-10">
         <div className="inline-block bg-black text-[#FFDD00] font-bangers text-xl md:text-3xl px-6 py-2 border-4 border-white shadow-[6px_6px_0_#000]">
           CHAPTER {chapter.num}: {chapter.subtitle}
         </div>
@@ -124,9 +186,12 @@ export default function ChapterSection({ chapter, cmykOffset, onSelectProject })
         </h2>
       </div>
 
-      {/* Main Centered Chapter Panel Box */}
+      {/* Main Centered Chapter Panel Box with 3D SaaS Perspective */}
       <div className="max-w-[950px] w-full mx-auto relative z-20">
-        <div ref={panelRef} className="comic-box p-5 sm:p-8 relative">
+        <div 
+          ref={panelRef} 
+          className="comic-box p-5 sm:p-8 relative transition-shadow duration-500 hover:shadow-[16px_16px_0_#000]"
+        >
           
           {/* Action SFX Sound Burst Badge */}
           <div 
@@ -137,7 +202,7 @@ export default function ChapterSection({ chapter, cmykOffset, onSelectProject })
             💥 {chapter.sfxWord}!
           </div>
 
-          {/* Panel Issue Header with Integrated Badge Tag */}
+          {/* Panel Issue Header */}
           <div className="flex flex-wrap justify-between items-center gap-3 border-b-4 border-black pb-4 mb-6 pr-20 sm:pr-24">
             <div className="flex items-center gap-3">
               <span className="font-bangers text-2xl sm:text-3xl md:text-4xl text-black">
@@ -156,6 +221,7 @@ export default function ChapterSection({ chapter, cmykOffset, onSelectProject })
 
           {/* Video Box with Direct Video Frame Thumbnail & Live Hover Playback */}
           <div 
+            ref={videoBoxRef}
             onMouseEnter={handleVideoHoverEnter}
             onMouseLeave={handleVideoHoverLeave}
             onClick={() => onSelectProject({
@@ -166,7 +232,7 @@ export default function ChapterSection({ chapter, cmykOffset, onSelectProject })
               video: chapter.video,
               format: chapter.format
             })}
-            className="relative aspect-video rounded-xl overflow-hidden border-4 border-black bg-black shadow-[8px_8px_0_#000] cursor-pointer group mb-6"
+            className="relative aspect-video rounded-xl overflow-hidden border-4 border-black bg-black shadow-[8px_8px_0_#000] cursor-pointer group mb-6 transition-all duration-300 group-hover:shadow-[12px_12px_0_#000]"
           >
             <video 
               ref={videoRef}
