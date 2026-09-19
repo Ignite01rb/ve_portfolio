@@ -46,7 +46,7 @@ const PROJECTS = [
     year: '2026',
     category: 'reels',
     format: 'Vertical 9:16',
-    video: 'videos/reel.mov',
+    video: 'videos/reel.mp4',
     desc: 'Fast-paced social media cut engineered for maximum retention.',
     tags: ['CapCut Pro', 'Retention Cut', 'Kinetic Text']
   },
@@ -90,7 +90,7 @@ const PROJECTS = [
     year: '2026',
     category: 'commercial',
     format: 'ProRes 422',
-    video: 'videos/core2.mp4',
+    video: 'videos/core2_web.mp4',
     desc: 'Extended dramatic scene pacing, atmosphere & sound design.',
     tags: ['Premiere Pro', 'Narrative Pacing', 'Atmospheric']
   },

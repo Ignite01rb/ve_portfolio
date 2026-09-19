@@ -148,7 +148,7 @@ export default function App() {
       client: 'SOCIAL CAMPAIGN',
       year: '2026',
       format: 'Vertical 9:16',
-      video: 'videos/reel.mov',
+      video: 'videos/reel.mp4',
       desc: 'Fast-paced social media cut engineered for maximum retention.',
       story: 'Blasting off at high velocity, 9:16 vertical cuts engineered for viral social media retention scorch the halftone paper!',
       speakerName: 'ROCKET GATOR',
