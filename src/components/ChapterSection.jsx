@@ -25,45 +25,49 @@ export default function ChapterSection({ chapter, cmykOffset, onSelectProject })
 
     if (!el || !sec) return;
 
-    // CRAZY Fly-In Trajectories & Multi-Axis Animations
-    let fromState = { opacity: 0 };
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+    const mult = isMobile ? 0.35 : 1.0;
+
+    // Smooth Fly-In Trajectories & GPU Hardware Accelerated Transforms
+    let fromState = { opacity: 0, force3D: true };
     let toState = {
       x: 0,
       y: 0,
       rotate: chapter.finalRotation || 0,
       scale: 1,
       opacity: 1,
-      ease: 'power4.out',
+      ease: 'power2.out',
+      force3D: true,
     };
 
     switch (chapter.flyDirection) {
       case 'top-left':
-        fromState = { x: -850, y: -600, rotate: -180, scale: 0.2, opacity: 0 };
-        toState.rotate = 360 + (chapter.finalRotation || 0); // 360 Spin Roll!
+        fromState = { x: -800 * mult, y: -450 * mult, rotate: -180, scale: 0.3, opacity: 0, force3D: true };
+        toState.rotate = 360 + (chapter.finalRotation || 0);
         break;
       case 'right':
-        fromState = { x: 950, y: 200, rotate: 90, scale: 0.2, opacity: 0 };
+        fromState = { x: 700 * mult, y: 150 * mult, rotate: 45, scale: 0.3, opacity: 0, force3D: true };
         toState.rotate = chapter.finalRotation || 0;
         break;
       case 'bottom-left':
-        fromState = { x: -850, y: 700, rotate: -45, scale: 0.3, opacity: 0 };
+        fromState = { x: -700 * mult, y: 450 * mult, rotate: -45, scale: 0.3, opacity: 0, force3D: true };
         break;
       case 'bottom-right':
-        fromState = { x: 950, y: 800, rotate: -90, scale: 0.2, opacity: 0 };
+        fromState = { x: 700 * mult, y: 450 * mult, rotate: -45, scale: 0.3, opacity: 0, force3D: true };
         break;
       case 'top-right':
-        fromState = { x: 850, y: -650, rotate: 720, scale: 0.1, opacity: 0 }; // 720 Double Spin!
-        toState.rotate = 720 + (chapter.finalRotation || 0);
+        fromState = { x: 700 * mult, y: -450 * mult, rotate: 360, scale: 0.2, opacity: 0, force3D: true };
+        toState.rotate = 360 + (chapter.finalRotation || 0);
         break;
       case 'top':
-        fromState = { x: 0, y: -1100, rotate: 25, scale: 2.5, opacity: 0 }; // Dive-Bomb Swoop!
+        fromState = { x: 0, y: -650 * mult, rotate: 15, scale: 1.8, opacity: 0, force3D: true };
         break;
       default:
-        fromState = { x: -700, opacity: 0 };
+        fromState = { x: -500 * mult, opacity: 0, force3D: true };
     }
 
     const ctx = gsap.context(() => {
-      // 1. CRAZY Animal Cutout ScrollTrigger Fly-In & Parallax
+      // 1. Smooth Hardware Accelerated Cutout ScrollTrigger Fly-In
       gsap.fromTo(
         el,
         fromState,
@@ -71,9 +75,9 @@ export default function ChapterSection({ chapter, cmykOffset, onSelectProject })
           ...toState,
           scrollTrigger: {
             trigger: sec,
-            start: 'top 90%',
-            end: 'center 40%',
-            scrub: chapter.scrubSpeed || 1.1,
+            start: 'top 92%',
+            end: 'center 45%',
+            scrub: isMobile ? 0.6 : (chapter.scrubSpeed || 0.9),
           }
         }
       );
@@ -212,7 +216,7 @@ export default function ChapterSection({ chapter, cmykOffset, onSelectProject })
               ref={animalRef}
               src={chapter.image} 
               alt={chapter.title}
-              className="w-full max-w-[520px] h-auto object-contain filter drop-shadow-[14px_14px_0_#000] transition-transform duration-300"
+              className="w-full max-w-[280px] sm:max-w-[400px] md:max-w-[520px] h-auto object-contain filter drop-shadow-[10px_10px_0_#000] sm:drop-shadow-[14px_14px_0_#000] transition-transform duration-300"
             />
           </div>
 

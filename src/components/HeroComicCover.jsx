@@ -30,15 +30,17 @@ export default function HeroComicCover({ onOpenShowreel, cmykOffset }) {
 
     if (!sec) return;
 
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+
     const ctx = gsap.context(() => {
-      // Crazy ScrollTrigger animation on Raaghav's Portrait Photo Cutout!
+      // Smooth ScrollTrigger animation on Raaghav's Portrait Photo Cutout!
       if (photo) {
         gsap.to(photo, {
-          y: 350,
-          scale: 1.3,
-          rotate: 18,
-          skewX: -8,
+          y: isMobile ? 90 : 280,
+          scale: isMobile ? 1.08 : 1.25,
+          rotate: isMobile ? 6 : 15,
           ease: 'none',
+          force3D: true,
           scrollTrigger: {
             trigger: sec,
             start: 'top top',
@@ -48,33 +50,33 @@ export default function HeroComicCover({ onOpenShowreel, cmykOffset }) {
         });
       }
 
-      // Crazy ScrollTrigger animation on Title
+      // Smooth ScrollTrigger animation on Title
       if (title) {
         gsap.to(title, {
-          scale: 1.18,
-          y: -120,
-          rotate: -5,
-          letterSpacing: '0.09em',
+          scale: isMobile ? 1.05 : 1.15,
+          y: isMobile ? -30 : -100,
+          rotate: isMobile ? -2 : -5,
+          force3D: true,
           scrollTrigger: {
             trigger: sec,
             start: 'top top',
             end: 'bottom top',
-            scrub: 1,
+            scrub: 0.8,
           }
         });
       }
 
-      // Crazy ScrollTrigger on Retro TV Stage
+      // Smooth ScrollTrigger on Retro TV Stage
       if (tv) {
         gsap.to(tv, {
-          rotateY: -22,
-          rotateZ: 8,
-          scale: 0.92,
+          rotateY: isMobile ? -8 : -20,
+          scale: isMobile ? 0.96 : 0.92,
+          force3D: true,
           scrollTrigger: {
             trigger: sec,
             start: 'top top',
             end: 'bottom top',
-            scrub: 1,
+            scrub: 0.8,
           }
         });
       }
@@ -145,8 +147,8 @@ export default function HeroComicCover({ onOpenShowreel, cmykOffset }) {
         {/* Giant Main Title */}
         <h1 
           ref={titleRef}
-          className={`font-bangers text-6xl sm:text-8xl md:text-9xl lg:text-[10.8rem] leading-none tracking-tight uppercase mb-4 ${
-            cmykOffset ? 'cmyk-offset-yellow' : 'text-[#FFDD00] drop-shadow-[8px_8px_0_#000]'
+          className={`font-bangers text-5xl sm:text-8xl md:text-9xl lg:text-[10.5rem] leading-none tracking-tight uppercase mb-4 break-words max-w-full ${
+            cmykOffset ? 'cmyk-offset-yellow' : 'text-[#FFDD00] drop-shadow-[5px_5px_0_#000] sm:drop-shadow-[8px_8px_0_#000]'
           }`}
         >
           RAAGHAV BISHT
@@ -160,18 +162,18 @@ export default function HeroComicCover({ onOpenShowreel, cmykOffset }) {
             <div 
               ref={photoCardRef}
               style={{ transformStyle: 'preserve-3d', perspective: 1000 }}
-              className="relative cursor-pointer group"
+              className="relative cursor-pointer group max-w-full"
               onClick={(e) => triggerBurst(e, 'KABOOM')}
             >
               {/* Pulsing Lightning Glow Starburst behind Photo */}
               <div className="absolute inset-0 bg-[#FFDD00] rounded-full blur-3xl opacity-30 animate-pulse pointer-events-none" />
 
               {/* Floating Starburst Badges */}
-              <div className="absolute -top-8 -left-6 z-30 font-bangers text-2xl md:text-4xl bg-[#FFDD00] text-black px-5 py-3 border-4 border-black shadow-[6px_6px_0_#000] rotate-[-12deg] group-hover:scale-125 transition-transform">
+              <div className="absolute -top-6 -left-3 sm:-top-8 sm:-left-6 z-30 font-bangers text-lg sm:text-2xl md:text-4xl bg-[#FFDD00] text-black px-3.5 sm:px-5 py-1.5 sm:py-3 border-3 sm:border-4 border-black shadow-[4px_4px_0_#000] sm:shadow-[6px_6px_0_#000] rotate-[-12deg] group-hover:scale-125 transition-transform">
                 💥 EDITOR!
               </div>
 
-              <div className="absolute -bottom-6 -right-4 z-30 font-bangers text-xl md:text-2xl bg-[#00FFFF] text-black px-4 py-2 border-3 border-black shadow-[5px_5px_0_#000] rotate-[8deg]">
+              <div className="absolute -bottom-5 -right-2 sm:-bottom-6 sm:-right-4 z-30 font-bangers text-base sm:text-xl md:text-2xl bg-[#00FFFF] text-black px-3 sm:px-4 py-1 sm:py-2 border-2 sm:border-3 border-black shadow-[4px_4px_0_#000] sm:shadow-[5px_5px_0_#000] rotate-[8deg]">
                 ⚡ Motion Graphics
               </div>
 
@@ -180,7 +182,7 @@ export default function HeroComicCover({ onOpenShowreel, cmykOffset }) {
                 ref={photoRef}
                 src="assets/user_cutout.png" 
                 alt="Raaghav Bisht - Video Editing Superhero" 
-                className="w-full max-w-[430px] h-auto object-contain filter drop-shadow-[16px_16px_0_#000] relative z-10"
+                className="w-full max-w-[280px] sm:max-w-[360px] md:max-w-[430px] h-auto object-contain filter drop-shadow-[10px_10px_0_#000] sm:drop-shadow-[16px_16px_0_#000] relative z-10"
               />
             </div>
           </div>

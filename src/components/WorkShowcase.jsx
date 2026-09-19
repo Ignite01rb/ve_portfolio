@@ -187,14 +187,15 @@ function ProjectCard3D({ project, onSelectProject, isRetroMode }) {
   };
 
   const handleMouseMove = (e) => {
+    if (typeof window !== 'undefined' && ('ontouchstart' in window || window.innerWidth < 768)) return;
     if (!cardRef.current) return;
     const rect = cardRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
-    const rotateX = ((y - centerY) / centerY) * -10;
-    const rotateY = ((x - centerX) / centerX) * 10;
+    const rotateX = ((y - centerY) / centerY) * -8;
+    const rotateY = ((x - centerX) / centerX) * 8;
     setTilt({ rotateX, rotateY });
   };
 

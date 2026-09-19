@@ -108,6 +108,7 @@ function MotionCard({ project, onSelectProject }) {
   };
 
   const handleMouseMove = (e) => {
+    if (typeof window !== 'undefined' && ('ontouchstart' in window || window.innerWidth < 768)) return;
     if (!cardRef.current) return;
     const rect = cardRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left;
