@@ -64,7 +64,14 @@ export default function ComicHeader({
             onClick={() => handleSFXClick('WHOOSH')}
             className="font-bangers text-sm px-3 py-1.5 border-2 border-black bg-[#E52535] text-white hover:bg-[#FFDD00] hover:text-black shadow-[3px_3px_0_#000]"
           >
-            ALL WORKS (11)
+            ALL WORKS
+          </a>
+          <a
+            href="#motion-graphics"
+            onClick={() => handleSFXClick('WHOOSH')}
+            className="font-bangers text-sm px-3 py-1.5 border-2 border-black bg-[#FFDD00] text-black hover:bg-white shadow-[3px_3px_0_#000]"
+          >
+            MOTION GRAPHICS
           </a>
         </nav>
 

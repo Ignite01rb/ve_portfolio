@@ -7,6 +7,7 @@ import ContactForm from './components/ContactForm';
 import ComicFooter from './components/ComicFooter';
 import VideoModal from './components/VideoModal';
 import ComicLoader from './components/ComicLoader';
+import MotionGraphicsSection from './components/MotionGraphicsSection';
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -251,6 +252,9 @@ export default function App() {
           isRetroMode={true} 
         />
       </div>
+
+      {/* Motion Graphics & 3D VFX Showcase Section */}
+      <MotionGraphicsSection onSelectProject={handleSelectProject} />
 
       {/* Studio Contact Section */}
       <div id="contact">
