@@ -199,7 +199,7 @@ export default function App() {
       client: 'NARRATIVE SHORT',
       year: '2025',
       format: '4K HDR',
-      video: 'videos/Timeline 1 (1).mp4',
+      video: 'videos/timeline_1_1.mp4',
       desc: 'NLE timeline choreography & multi-cam sound mix.',
       story: 'Diving straight down from the sky, NLE timeline choreography and multi-cam sound mixes deliver the final victory swoop!',
       speakerName: 'APEX EAGLE',

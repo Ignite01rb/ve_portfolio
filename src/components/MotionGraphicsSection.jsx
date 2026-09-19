@@ -8,28 +8,36 @@ import { getVideoUrl } from '../utils/videoUtils';
 const MOTION_PROJECTS = [
   {
     id: 'mg1',
+    title: 'TIMELINE MOTION REEL',
+    client: 'MOTION GRAPHICS LAB',
+    year: '2026',
+    format: '4K MP4',
+    video: 'videos/timeline_motion.mp4',
+    desc: 'Dynamic 2D/3D motion choreography, fluid keyframe easing, particle effects & title reveals.',
+    tags: ['After Effects', 'Motion Graphics', 'Keyframe Pacing']
+  },
+  {
+    id: 'mg2',
+    title: 'EDITORIAL TIMELINE CUT II',
+    client: 'VE MOTION STUDIO',
+    year: '2026',
+    format: '4K MP4',
+    video: 'videos/timeline_1_1.mp4',
+    desc: 'Multi-layer timeline motion edit, rhythmic optical transitions & sound synthesis.',
+    tags: ['Premiere Pro', 'Timeline Cut', 'Visual Effects']
+  },
+  {
+    id: 'mg3',
     title: '3D MOTION COMPOSITING & TITLE DESIGN',
     client: 'COMMERCIAL VFX',
     year: '2026',
     format: '4K RAW',
     video: 'videos/Comp 1.mp4',
-    altVideo: 'videos/timeline motion.mp4',
     desc: '3D camera motion tracking, particle compositing, kinetic typography & visual effects.',
     tags: ['After Effects', '3D Compositing', 'Kinetic Titles']
   },
   {
-    id: 'mg2',
-    title: 'NLE TIMELINE MOTION & SOUND MIX',
-    client: 'EDITORIAL MOTION',
-    year: '2026',
-    format: '4K HDR',
-    video: 'videos/timeline motion.mp4',
-    altVideo: 'videos/Timeline 1.mov',
-    desc: 'Timeline motion choreography, multi-layered video transitions & optical motion graphics.',
-    tags: ['Motion Graphics', 'Timeline FX', 'Optical Transitions']
-  },
-  {
-    id: 'mg3',
+    id: 'mg4',
     title: 'KINETIC SUBTITLE & REEL MOTION',
     client: 'SOCIAL MEDIA MOTION',
     year: '2026',
@@ -37,16 +45,6 @@ const MOTION_PROJECTS = [
     video: 'videos/0724(4).mp4',
     desc: 'Fast-paced kinetic overlays, subtitle pop animations & rhythmic particle motion.',
     tags: ['Kinetic Text', 'Motion Blur', 'Subtitles']
-  },
-  {
-    id: 'mg4',
-    title: 'BRAND COMMERCIAL MOTION CAMPAIGN',
-    client: 'DIRECTOR PROMO',
-    year: '2026',
-    format: '4K 60FPS',
-    video: 'videos/core.mp4',
-    desc: 'Dynamic brand motion graphics, logo reveals & high-voltage color grading.',
-    tags: ['DaVinci Resolve', 'Logo Motion', 'Color Pass']
   }
 ];
 
