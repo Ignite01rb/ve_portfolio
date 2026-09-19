@@ -10,7 +10,6 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function ChapterSection({ chapter, cmykOffset, onSelectProject }) {
   const sectionRef = useRef(null);
-  const animalRef = useRef(null);
   const panelRef = useRef(null);
   const videoRef = useRef(null);
   const burstBadgeRef = useRef(null);
@@ -18,79 +17,18 @@ export default function ChapterSection({ chapter, cmykOffset, onSelectProject })
   const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
-    const el = animalRef.current;
     const sec = sectionRef.current;
     const panel = panelRef.current;
     const badge = burstBadgeRef.current;
 
-    if (!el || !sec) return;
-
-    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-    const mult = isMobile ? 0.35 : 1.0;
-
-    // Smooth Fly-In Trajectories & GPU Hardware Accelerated Transforms
-    let fromState = { opacity: 0, force3D: true };
-    let toState = {
-      x: 0,
-      y: 0,
-      rotate: chapter.finalRotation || 0,
-      scale: 1,
-      opacity: 1,
-      ease: 'power2.out',
-      force3D: true,
-    };
-
-    switch (chapter.flyDirection) {
-      case 'top-left':
-        fromState = { x: -600 * mult, y: -300 * mult, rotate: 0, scale: 0.6, opacity: 0, force3D: true };
-        toState.rotate = 0;
-        break;
-      case 'right':
-        fromState = { x: 500 * mult, y: 0, rotate: 0, scale: 0.6, opacity: 0, force3D: true };
-        toState.rotate = 0;
-        break;
-      case 'bottom-left':
-        fromState = { x: -500 * mult, y: 300 * mult, rotate: 0, scale: 0.6, opacity: 0, force3D: true };
-        toState.rotate = 0;
-        break;
-      case 'bottom-right':
-        fromState = { x: 500 * mult, y: 300 * mult, rotate: 0, scale: 0.6, opacity: 0, force3D: true };
-        toState.rotate = 0;
-        break;
-      case 'top-right':
-        fromState = { x: 500 * mult, y: -300 * mult, rotate: 0, scale: 0.6, opacity: 0, force3D: true };
-        toState.rotate = 0;
-        break;
-      case 'top':
-        fromState = { x: 0, y: -450 * mult, rotate: 0, scale: 1.2, opacity: 0, force3D: true };
-        toState.rotate = 0;
-        break;
-      default:
-        fromState = { x: -400 * mult, opacity: 0, force3D: true };
-        toState.rotate = 0;
-    }
+    if (!sec) return;
 
     const ctx = gsap.context(() => {
-      // 1. Smooth Symmetric Cutout ScrollTrigger Fly-In
-      gsap.fromTo(
-        el,
-        fromState,
-        {
-          ...toState,
-          scrollTrigger: {
-            trigger: sec,
-            start: 'top 90%',
-            end: 'center 45%',
-            scrub: isMobile ? 0.5 : 0.8,
-          }
-        }
-      );
-
-      // 2. Symmetric Clean Vertical Reveal for Panel Box
+      // 1. Symmetric Clean Vertical Reveal for Main Panel Box
       if (panel) {
         gsap.fromTo(
           panel,
-          { y: 50, opacity: 0, scale: 0.96 },
+          { y: 60, opacity: 0, scale: 0.96 },
           {
             y: 0,
             opacity: 1,
@@ -105,20 +43,20 @@ export default function ChapterSection({ chapter, cmykOffset, onSelectProject })
         );
       }
 
-      // 3. Floating Sound Burst Badge Pulsing Motion
+      // 2. Floating Sound Burst Badge Pulsing Motion
       if (badge) {
         gsap.fromTo(
           badge,
-          { scale: 0.5, rotate: -20, opacity: 0 },
+          { scale: 0.5, rotate: -15, opacity: 0 },
           {
-            scale: 1.1,
-            rotate: -12,
+            scale: 1.05,
+            rotate: -6,
             opacity: 1,
             duration: 0.6,
             ease: 'elastic.out(1, 0.4)',
             scrollTrigger: {
               trigger: sec,
-              start: 'top 70%',
+              start: 'top 75%',
             }
           }
         );
@@ -171,65 +109,118 @@ export default function ChapterSection({ chapter, cmykOffset, onSelectProject })
     <section 
       ref={sectionRef} 
       id={chapter.id}
-      className={`relative w-full min-h-screen py-24 px-4 flex flex-col justify-center items-center overflow-hidden border-b-8 border-black ${chapter.bgClass || 'bg-halftone-pattern'}`}
+      className={`relative w-full min-h-screen py-20 px-4 flex flex-col justify-center items-center overflow-hidden border-b-8 border-black ${chapter.bgClass || 'bg-halftone-pattern'}`}
     >
       
       {/* Background Section Title Banner */}
-      <div className="max-w-[1300px] w-full mx-auto mb-10 text-center relative z-10">
+      <div className="max-w-[1000px] w-full mx-auto mb-8 text-center relative z-10">
         <div className="inline-block bg-black text-[#FFDD00] font-bangers text-xl md:text-3xl px-6 py-2 border-4 border-white shadow-[6px_6px_0_#000]">
           CHAPTER {chapter.num}: {chapter.subtitle}
         </div>
-        <h2 className={`font-bangers text-4xl sm:text-6xl md:text-8xl tracking-wide uppercase mt-4 ${
+        <h2 className={`font-bangers text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-wide uppercase mt-4 ${
           cmykOffset ? 'cmyk-offset-yellow' : 'text-[#FFDD00] drop-shadow-[7px_7px_0_#000]'
         }`}>
           {chapter.title}
         </h2>
       </div>
 
-      {/* Main Chapter Content Grid */}
-      <div className="max-w-[1300px] w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-20">
-        
-        {/* Flying Crayon Animal Cutout Container */}
-        <div className={`lg:col-span-6 flex flex-col items-center justify-center relative ${chapter.reverseLayout ? 'lg:order-2' : 'lg:order-1'}`}>
+      {/* Main Centered Chapter Panel Box */}
+      <div className="max-w-[950px] w-full mx-auto relative z-20">
+        <div ref={panelRef} className="comic-box p-5 sm:p-8 relative">
           
-          <div className="relative group cursor-pointer mb-6" onClick={triggerBurst}>
-            {/* Action SFX Sound Burst Badge over Animal Cutout */}
-            <div 
-              ref={burstBadgeRef}
-              className={`absolute -top-8 -left-4 z-30 font-bangers text-2xl sm:text-3xl md:text-5xl px-4 sm:px-6 py-2 sm:py-3 border-4 border-black shadow-[6px_6px_0_#000] group-hover:scale-110 transition-transform ${chapter.burstBg || 'bg-[#FFDD00] text-black'}`}
-            >
-              💥 {chapter.sfxWord}!
-            </div>
-
-            {/* Big Crayon Animal Cutout Image */}
-            <img 
-              ref={animalRef}
-              src={chapter.image} 
-              alt={chapter.title}
-              className="w-full max-w-[280px] sm:max-w-[400px] md:max-w-[520px] h-auto object-contain filter drop-shadow-[10px_10px_0_#000] sm:drop-shadow-[14px_14px_0_#000] transition-transform duration-300"
-            />
+          {/* Action SFX Sound Burst Badge */}
+          <div 
+            ref={burstBadgeRef}
+            onClick={triggerBurst}
+            className={`absolute -top-6 -right-2 sm:-top-8 sm:-right-4 z-30 font-bangers text-xl sm:text-3xl md:text-4xl px-4 sm:px-6 py-2 border-4 border-black shadow-[6px_6px_0_#000] cursor-pointer hover:scale-110 transition-transform ${chapter.burstBg || 'bg-[#FFDD00] text-black'}`}
+          >
+            💥 {chapter.sfxWord}!
           </div>
 
-        </div>
-
-        {/* Comic Story & Video Panel Box */}
-        <div className={`lg:col-span-6 ${chapter.reverseLayout ? 'lg:order-1' : 'lg:order-2'}`}>
-          <div ref={panelRef} className="comic-box p-6 md:p-8 relative">
-            
-            {/* Panel Issue Header */}
-            <div className="flex flex-wrap justify-between items-center gap-2 border-b-4 border-black pb-3 mb-4">
-              <span className="font-bangers text-2xl md:text-3xl text-black">
+          {/* Panel Issue Header with Integrated Badge Tag */}
+          <div className="flex flex-wrap justify-between items-center gap-3 border-b-4 border-black pb-4 mb-6 pr-20 sm:pr-24">
+            <div className="flex items-center gap-3">
+              <span className="font-bangers text-2xl sm:text-3xl md:text-4xl text-black">
                 PANEL {chapter.num}.1 — {chapter.projectTitle}
               </span>
-              <span className="font-marker text-xs bg-[#FFDD00] text-black px-3 py-1 border-2 border-black">
-                FLY: {chapter.flyDirection.toUpperCase()}
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="font-marker text-xs sm:text-sm bg-black text-[#FFDD00] px-3 py-1 border-2 border-black">
+                {chapter.client}
+              </span>
+              <span className="font-marker text-xs sm:text-sm bg-[#FFDD00] text-black px-3 py-1 border-2 border-black">
+                {chapter.year}
               </span>
             </div>
+          </div>
 
-            {/* Video Box with Direct Video Frame Thumbnail & Live Hover Playback */}
-            <div 
-              onMouseEnter={handleVideoHoverEnter}
-              onMouseLeave={handleVideoHoverLeave}
+          {/* Video Box with Direct Video Frame Thumbnail & Live Hover Playback */}
+          <div 
+            onMouseEnter={handleVideoHoverEnter}
+            onMouseLeave={handleVideoHoverLeave}
+            onClick={() => onSelectProject({
+              title: chapter.projectTitle,
+              client: chapter.client,
+              year: chapter.year,
+              desc: chapter.desc,
+              video: chapter.video,
+              format: chapter.format
+            })}
+            className="relative aspect-video rounded-xl overflow-hidden border-4 border-black bg-black shadow-[8px_8px_0_#000] cursor-pointer group mb-6"
+          >
+            <video 
+              ref={videoRef}
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              onLoadedMetadata={handleLoadedMetadata}
+              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            >
+              <source src={`${getVideoUrl(chapter.video)}#t=0.5`} type={chapter.video.endsWith('.mov') ? 'video/quicktime' : 'video/mp4'} />
+              <source src={getVideoUrl(chapter.video)} />
+            </video>
+
+            {/* Hover Play Button Overlay */}
+            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 bg-[#FFDD00] text-black rounded-full flex items-center justify-center border-4 border-black shadow-[5px_5px_0_#000] group-hover:scale-110 transition-transform">
+                <Play size={32} className="ml-1 fill-black" />
+              </div>
+            </div>
+
+            {/* Top Right Live Preview Indicator */}
+            <div className="absolute top-3 right-3 bg-black/80 text-[#00FFFF] font-bangers text-xs sm:text-sm px-3 py-1 border-2 border-black flex items-center gap-1.5 backdrop-blur-sm">
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              HOVER TO PREVIEW
+            </div>
+
+            {/* Bottom Duration & Format Badge */}
+            <span className="absolute bottom-3 right-3 bg-black text-white font-bangers text-xs sm:text-sm px-3.5 py-1.5 border-2 border-white flex items-center gap-2 shadow-md">
+              <Sparkles size={14} className="text-[#FFDD00]" />
+              {durationText} • {chapter.format}
+            </span>
+          </div>
+
+          {/* Story Text Box */}
+          <div className="bg-[#FFF8E7] border-4 border-black p-4 sm:p-5 shadow-[5px_5px_0_#000] mb-5">
+            <p className="font-comic font-bold text-base sm:text-xl text-black leading-snug">
+              "{chapter.story}"
+            </p>
+          </div>
+
+          {/* Character / Engine Dialogue Bubble */}
+          <div className="relative bg-black text-white p-4 sm:p-5 border-4 border-black shadow-[6px_6px_0_#000] mb-6">
+            <span className="font-bangers text-[#FFDD00] text-lg sm:text-xl block mb-1">
+              🗣️ {chapter.speakerName}:
+            </span>
+            <p className="font-comic text-sm sm:text-lg font-bold leading-tight text-slate-100">
+              "{chapter.dialogue}"
+            </p>
+          </div>
+
+          {/* Interactive Action Button Toolbar */}
+          <div className="flex flex-wrap items-center justify-between gap-4 pt-3 border-t-4 border-black">
+            <button
               onClick={() => onSelectProject({
                 title: chapter.projectTitle,
                 client: chapter.client,
@@ -238,80 +229,21 @@ export default function ChapterSection({ chapter, cmykOffset, onSelectProject })
                 video: chapter.video,
                 format: chapter.format
               })}
-              className="relative aspect-video rounded-lg overflow-hidden border-4 border-black bg-black shadow-[6px_6px_0_#000] cursor-pointer group mb-5"
+              className="comic-button text-lg sm:text-xl px-6 py-3 flex items-center gap-2.5"
             >
-              <video 
-                ref={videoRef}
-                muted
-                loop
-                playsInline
-                preload="metadata"
-                onLoadedMetadata={handleLoadedMetadata}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              >
-                <source src={`${getVideoUrl(chapter.video)}#t=0.5`} type={chapter.video.endsWith('.mov') ? 'video/quicktime' : 'video/mp4'} />
-                <source src={getVideoUrl(chapter.video)} />
-              </video>
+              <Play size={20} className="fill-black" />
+              <span>WATCH FULL PROJECT</span>
+            </button>
 
-              {/* Hover Play Button Overlay */}
-              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                <div className="w-16 h-16 bg-[#FFDD00] text-black rounded-full flex items-center justify-center border-4 border-black shadow-[4px_4px_0_#000] group-hover:scale-110 transition-transform">
-                  <Play size={28} className="ml-1 fill-black" />
-                </div>
-              </div>
-
-              {/* Duration Badge */}
-              <span className="absolute bottom-3 right-3 bg-black text-white font-bangers text-sm px-3 py-1 border-2 border-white flex items-center gap-1.5 shadow-md">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                {durationText} • {chapter.format}
-              </span>
-            </div>
-
-            {/* Story Text Box */}
-            <div className="bg-[#FFF8E7] border-4 border-black p-4 shadow-[4px_4px_0_#000] mb-4">
-              <p className="font-comic font-bold text-base md:text-xl text-black leading-snug">
-                "{chapter.story}"
-              </p>
-            </div>
-
-            {/* Character Dialogue Bubble */}
-            <div className="relative bg-black text-white p-4 border-4 border-black shadow-[5px_5px_0_#000] mb-4">
-              <span className="font-bangers text-[#FFDD00] text-lg block mb-1">
-                🗣️ {chapter.speakerName}:
-              </span>
-              <p className="font-comic text-sm md:text-lg font-bold leading-tight">
-                "{chapter.dialogue}"
-              </p>
-            </div>
-
-            {/* Interactive Action Button */}
-            <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t-4 border-black">
-              <button
-                onClick={() => onSelectProject({
-                  title: chapter.projectTitle,
-                  client: chapter.client,
-                  year: chapter.year,
-                  desc: chapter.desc,
-                  video: chapter.video,
-                  format: chapter.format
-                })}
-                className="comic-button text-lg md:text-xl px-5 py-2.5 flex items-center gap-2"
-              >
-                <Play size={18} className="fill-black" />
-                <span>WATCH FULL PROJECT</span>
-              </button>
-
-              <button
-                onClick={triggerBurst}
-                className="font-bangers text-lg bg-[#FFDD00] text-black px-4 py-2 border-2 border-black shadow-[3px_3px_0_#000] hover:bg-white"
-              >
-                💥 {chapter.sfxWord}!
-              </button>
-            </div>
-
+            <button
+              onClick={triggerBurst}
+              className="font-bangers text-lg sm:text-xl bg-[#FFDD00] text-black px-5 py-2.5 border-3 border-black shadow-[4px_4px_0_#000] hover:bg-white transition-colors"
+            >
+              💥 {chapter.sfxWord}!
+            </button>
           </div>
-        </div>
 
+        </div>
       </div>
 
     </section>
