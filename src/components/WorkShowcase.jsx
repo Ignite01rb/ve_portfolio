@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Play } from 'lucide-react';
 import { playTapeClick } from '../utils/audio';
 import ScrollReveal from './ScrollReveal';
+import { getVideoUrl } from '../utils/videoUtils';
 
 const PROJECTS = [
   {
@@ -250,10 +251,8 @@ function ProjectCard3D({ project, onSelectProject, isRetroMode }) {
           onLoadedMetadata={handleLoadedMetadata}
           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
         >
-          <source src={`${project.video}#t=0.5`} />
-          {project.video?.includes('Timeline 1') && (
-            <source src="videos/Timeline 1.mov#t=0.5" />
-          )}
+          <source src={`${getVideoUrl(project.video)}#t=0.5`} type={project.video.endsWith('.mov') ? 'video/quicktime' : 'video/mp4'} />
+          <source src={getVideoUrl(project.video)} />
         </video>
 
         {/* Hover Overlay with Play Icon */}

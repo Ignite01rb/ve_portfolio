@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Play, Sparkles } from 'lucide-react';
 import { playTapeClick } from '../utils/audio';
 import ScrollReveal from './ScrollReveal';
+import { getVideoUrl } from '../utils/videoUtils';
 
 const MOTION_PROJECTS = [
   {
@@ -161,8 +162,9 @@ function MotionCard({ project, onSelectProject }) {
           onLoadedMetadata={handleLoadedMetadata}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
         >
-          <source src={`${project.video}#t=0.5`} />
-          {project.altVideo && <source src={`${project.altVideo}#t=0.5`} />}
+          <source src={`${getVideoUrl(project.video)}#t=0.5`} type={project.video.endsWith('.mov') ? 'video/quicktime' : 'video/mp4'} />
+          <source src={getVideoUrl(project.video)} />
+          {project.altVideo && <source src={getVideoUrl(project.altVideo)} />}
         </video>
 
         {/* Hover Play Button */}

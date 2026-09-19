@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { X } from 'lucide-react';
+import { getVideoUrl } from '../utils/videoUtils';
 
 export default function VideoModal({ isOpen, project, onClose }) {
   useEffect(() => {
@@ -13,6 +14,9 @@ export default function VideoModal({ isOpen, project, onClose }) {
   }, [isOpen, onClose]);
 
   if (!isOpen || !project) return null;
+
+  const rawUrl = project.video || '';
+  const encodedUrl = getVideoUrl(rawUrl);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-fadeIn">
@@ -32,15 +36,16 @@ export default function VideoModal({ isOpen, project, onClose }) {
         {/* Video Player */}
         <div className="relative aspect-video w-full bg-black">
           <video 
-            key={project.video}
+            key={encodedUrl}
             controls 
             autoPlay 
             poster={project.img}
             className="w-full h-full object-contain"
           >
-            <source src={project.video} />
-            {project.video?.includes('Timeline 1') && (
-              <source src="videos/Timeline 1.mov" type="video/quicktime" />
+            <source src={encodedUrl} type={rawUrl.endsWith('.mov') ? 'video/quicktime' : 'video/mp4'} />
+            <source src={encodedUrl} />
+            {rawUrl.includes('Timeline 1') && (
+              <source src={getVideoUrl('videos/Timeline 1.mov')} type="video/quicktime" />
             )}
             Your browser does not support HTML5 video playback.
           </video>

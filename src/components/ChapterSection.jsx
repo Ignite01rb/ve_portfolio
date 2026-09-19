@@ -4,6 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import confetti from 'canvas-confetti';
 import { Play, Sparkles } from 'lucide-react';
 import { playComicSFX } from '../utils/audioSFX';
+import { getVideoUrl } from '../utils/videoUtils';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -247,14 +248,16 @@ export default function ChapterSection({ chapter, cmykOffset, onSelectProject })
             >
               <video 
                 ref={videoRef}
-                src={`${chapter.video}#t=0.5`}
                 muted
                 loop
                 playsInline
                 preload="metadata"
                 onLoadedMetadata={handleLoadedMetadata}
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
+              >
+                <source src={`${getVideoUrl(chapter.video)}#t=0.5`} type={chapter.video.endsWith('.mov') ? 'video/quicktime' : 'video/mp4'} />
+                <source src={getVideoUrl(chapter.video)} />
+              </video>
 
               {/* Hover Play Button Overlay */}
               <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
