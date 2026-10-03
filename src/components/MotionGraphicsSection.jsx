@@ -45,6 +45,16 @@ const MOTION_PROJECTS = [
     video: 'videos/0724(4).mp4',
     desc: 'Fast-paced kinetic overlays, subtitle pop animations & rhythmic particle motion.',
     tags: ['Kinetic Text', 'Motion Blur', 'Subtitles']
+  },
+  {
+    id: 'mg5',
+    title: 'TIMELINE MASTER CHOREOGRAPHY',
+    client: 'VE MOTION LAB',
+    year: '2026',
+    format: '4K MP4',
+    video: 'videos/Timeline......mp4',
+    desc: 'Advanced timeline motion choreography, multi-track audio visual sync & optical keyframing.',
+    tags: ['After Effects', 'Timeline Cut', 'Audio Visual Sync']
   }
 ];
 

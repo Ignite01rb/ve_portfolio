@@ -126,6 +126,17 @@ const PROJECTS = [
     video: 'videos/WhatsApp Video 2025-10-18 at 21.43.56_46793ba3.mp4',
     desc: 'Dynamic pacing, punchy sound triggers & vibrant color accents.',
     tags: ['CapCut Pro', 'Kinetic Overlays', 'Sound Triggers']
+  },
+  {
+    id: 12,
+    title: 'TIMELINE EDITORIAL CUT MASTER',
+    client: 'NLE TIMELINE PROMO',
+    year: '2026',
+    category: 'commercial',
+    format: '4K MP4',
+    video: 'videos/Timeline......mp4',
+    desc: 'Advanced NLE timeline editing with multi-cam speed sync and rhythmic cuts.',
+    tags: ['Premiere Pro', 'Timeline Cut', 'Speed Sync']
   }
 ];
 
